@@ -66,8 +66,8 @@ pub trait TcpClient {
 pub trait TcpServer: TcpClient {
 	/// Create a new TCP socket and bind it to the specified local port.
 	///
-	///Returns `Ok(socket)` when a new socket is successfully created and bound to the specified
-	///local port. Otherwise, an `Err(e)` variant is returned.
+	/// Returns `Ok(socket)` when a new socket is successfully created and bound to the specified
+	/// local port. Otherwise, an `Err(e)` variant is returned.
 	fn bind(&self, local_port: u16) -> Result<Self::TcpSocket, Self::Error>;
 
 	/// Begin listening for connection requests on a previously-bound socket.
