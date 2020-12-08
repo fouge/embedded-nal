@@ -1,5 +1,6 @@
 //! # embedded-nal - A Network Abstraction Layer for Embedded Systems
 
+#![doc(html_root_url = "https://docs.rs/embedded-nal/0.2.0")]
 #![no_std]
 #![deny(missing_docs)]
 #![deny(unsafe_code)]
@@ -58,13 +59,13 @@ pub trait TcpClient {
 	) -> nb::Result<usize, Self::Error>;
 
 	/// Close an existing TCP socket.
-	fn close(&self, socket: Self::TcpSocket) -> Result<(), Self::Error>;
+	fn close(&self, socket: &Self::TcpSocket) -> Result<(), Self::Error>;
 }
 
 /// This trait is implemented by TCP/IP stacks that expose TCP server functionality. TCP servers
 /// may listen for connection requests to establish multiple unique TCP connections with various
 /// clients.
-pub trait TcpServer: TcpClient {
+pub trait TcpFullStack: TcpClientStack {
 	/// Create a new TCP socket and bind it to the specified local port.
 	///
 	/// Returns `Ok` when a socket is successfully bound to the specified local port. Otherwise, an
@@ -92,7 +93,7 @@ pub trait TcpServer: TcpClient {
 /// module. You could have another implementation which knows how to driver the
 /// Rust Standard Library's `std::net` module. Given this trait, you can how
 /// write a portable CoAP client which can work with either implementation.
-pub trait UdpClient {
+pub trait UdpClientStack {
 	/// The type returned when we create a new UDP socket
 	type UdpSocket;
 	/// The type returned when we have an error
@@ -142,5 +143,3 @@ pub trait UdpServer: UdpClient {
 		buffer: &[u8],
 	) -> nb::Result<(), Self::Error>;
 }
-
-// End Of File
